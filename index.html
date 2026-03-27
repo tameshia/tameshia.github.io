@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tameshia Scruggs | Cybersecurity Portfolio</title>
-  <meta name="description" content="Portfolio website for Tameshia Scruggs, a cybersecurity student building hands-on skills in networking, cloud, Java, and security labs." />
+  <meta
+    name="description"
+    content="Portfolio website for Tameshia Scruggs, a cybersecurity student building hands-on skills in networking, cloud, Java, and security labs."
+  />
   <style>
     :root {
       --bg: #0b1020;
@@ -20,7 +23,9 @@
     }
 
     * { box-sizing: border-box; }
+
     html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
@@ -29,8 +34,15 @@
       line-height: 1.6;
     }
 
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
     .container {
       width: min(92%, var(--max));
@@ -71,7 +83,9 @@
     }
 
     .nav-links a:hover,
-    .nav-links a:focus { color: var(--text); }
+    .nav-links a:focus {
+      color: var(--text);
+    }
 
     .menu-toggle {
       display: none;
@@ -85,10 +99,12 @@
       color: var(--text);
       font-size: 1.4rem;
       cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
 
     .menu-toggle:hover {
       background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
     }
 
     .hero {
@@ -113,10 +129,22 @@
       margin-bottom: 18px;
     }
 
-    h1, h2, h3 { line-height: 1.15; margin: 0 0 14px; }
-    h1 { font-size: clamp(2.2rem, 5vw, 4.3rem); }
-    h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); }
-    h3 { font-size: 1.15rem; }
+    h1, h2, h3 {
+      line-height: 1.15;
+      margin: 0 0 14px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4.3rem);
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+    }
 
     .lead {
       font-size: 1.06rem;
@@ -124,7 +152,8 @@
       max-width: 60ch;
     }
 
-    .hero-card, .panel {
+    .hero-card,
+    .panel {
       background: linear-gradient(180deg, rgba(26,35,69,0.9), rgba(18,25,51,0.94));
       border: 1px solid var(--border);
       border-radius: 24px;
@@ -170,7 +199,9 @@
       transition: 0.2s ease;
     }
 
-    .btn:hover { transform: translateY(-1px); }
+    .btn:hover {
+      transform: translateY(-1px);
+    }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
@@ -236,7 +267,9 @@
       letter-spacing: 0.2px;
     }
 
-    .muted { color: var(--muted); }
+    .muted {
+      color: var(--muted);
+    }
 
     .card-actions {
       margin-top: auto;
@@ -299,7 +332,7 @@
         display: inline-flex;
       }
 
-            .nav-links {
+      .nav-links {
         display: none;
         grid-column: 1 / -1;
         width: 100%;
@@ -312,11 +345,11 @@
         background: linear-gradient(180deg, rgba(26,35,69,0.96), rgba(18,25,51,0.98));
         box-shadow: var(--shadow);
       }
-      
+
       .nav-links.open {
         display: flex;
       }
-      
+
       .nav-links a {
         display: block;
         width: 100%;
@@ -326,7 +359,7 @@
         color: var(--muted);
         transition: background 0.2s ease, color 0.2s ease;
       }
-      
+
       .nav-links a:hover,
       .nav-links a:focus {
         background: rgba(255,255,255,0.05);
@@ -347,7 +380,7 @@
 
       h1 {
         font-size: clamp(2rem, 9vw, 2.8rem);
-        line-height: 1.06;
+        line-height: 1.08;
       }
 
       .lead {
@@ -381,7 +414,14 @@
   <nav class="nav">
     <div class="container nav-inner">
       <div class="brand">Tameshia Scruggs</div>
-      <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav">☰</button>
+      <button
+        class="menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        ☰
+      </button>
       <div class="nav-links" id="site-nav">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
@@ -464,7 +504,9 @@
           <article class="card">
             <div class="meta">Cloud • AWS</div>
             <h3>AWS Fundamentals Lab</h3>
-            <p class="muted">Hands-on cloud lab work covering IAM, EC2, S3, VPC, and basic monitoring concepts. Built to strengthen practical understanding of foundational AWS services.</p>
+            <p class="muted">
+              Hands-on cloud lab work covering IAM, EC2, S3, VPC, and basic monitoring concepts. Built to strengthen practical understanding of foundational AWS services.
+            </p>
             <p class="muted"><strong>Tools:</strong> AWS, GitHub, Markdown</p>
             <div class="card-actions">
               <a class="inline-link" href="https://github.com/tameshia" target="_blank" rel="noopener noreferrer">View Code</a>
@@ -474,7 +516,9 @@
           <article class="card">
             <div class="meta">Networking • Security</div>
             <h3>Networking and Security Labs</h3>
-            <p class="muted">Practice work focused on networking fundamentals, routing concepts, security fundamentals, and hands-on lab environments that support IT and security learning.</p>
+            <p class="muted">
+              Practice work focused on networking fundamentals, routing concepts, security fundamentals, and hands-on lab environments that support IT and security learning.
+            </p>
             <p class="muted"><strong>Tools:</strong> Packet Tracer, TryHackMe, study labs</p>
             <div class="card-actions">
               <a class="inline-link" href="https://github.com/tameshia" target="_blank" rel="noopener noreferrer">View Projects</a>
@@ -484,7 +528,9 @@
           <article class="card">
             <div class="meta">Programming • Java</div>
             <h3>Java Coursework and Practice</h3>
-            <p class="muted">A growing collection of Java exercises and beginner-friendly programming work that demonstrates problem solving, logic building, and comfort with core programming concepts.</p>
+            <p class="muted">
+              A growing collection of Java exercises and beginner-friendly programming work that demonstrates problem solving, logic building, and comfort with core programming concepts.
+            </p>
             <p class="muted"><strong>Tools:</strong> Java, Eclipse/IDE, GitHub</p>
             <div class="card-actions">
               <a class="inline-link" href="https://github.com/tameshia" target="_blank" rel="noopener noreferrer">View Code</a>
@@ -500,7 +546,9 @@
           <div class="section-head">
             <h2>Resume</h2>
           </div>
-          <p class="muted">Add your resume PDF to this repo and update the button below to point to it, for example: <code>resume.pdf</code>.</p>
+          <p class="muted">
+            Add your resume PDF to this repo and update the button below to point to it, for example: <code>resume.pdf</code>.
+          </p>
           <div class="actions">
             <a class="btn btn-primary" href="resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a>
             <a class="btn btn-secondary" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -542,6 +590,7 @@
       <p>© 2026 Tameshia Scruggs. Built with GitHub Pages.</p>
     </div>
   </footer>
+
   <script>
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
