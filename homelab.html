@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dedicated Cybersecurity Home Lab | Tameshia Scruggs</title>
+  <meta
+    name="description"
+    content="Dedicated cybersecurity home lab project by Tameshia Scruggs, featuring Proxmox virtualization, network isolation, Windows and Linux virtual machines, and hands-on security practice."
+  />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #1a2345;
+      --text: #eef2ff;
+      --muted: #b8c0e0;
+      --accent: #9f7aea;
+      --accent-2: #c4b5fd;
+      --border: rgba(255,255,255,0.12);
+      --shadow: 0 18px 40px rgba(0,0,0,0.28);
+      --max: 1200px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #0b1020 0%, #101933 45%, #0f1730 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(92%, var(--max));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(11,16,32,0.75);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      gap: 16px;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--text);
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .menu-toggle:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      padding: 88px 0 44px;
+    }
+
+    .hero-card,
+    .panel,
+    .table-wrap {
+      background: linear-gradient(180deg, rgba(26,35,69,0.9), rgba(18,25,51,0.94));
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card,
+    .panel,
+    .table-wrap {
+      padding: 24px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border: 1px solid rgba(196,181,253,0.35);
+      border-radius: 999px;
+      background: rgba(159,122,234,0.12);
+      color: var(--accent-2);
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.15;
+      margin: 0 0 14px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    h3 {
+      font-size: 1.12rem;
+    }
+
+    .lead {
+      font-size: 1.06rem;
+      color: var(--muted);
+      max-width: 68ch;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #120f23;
+      border: none;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    section {
+      padding: 24px 0;
+    }
+
+    .section-head {
+      margin-bottom: 18px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .quick-list {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .quick-list li {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .card {
+      padding: 22px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(26,35,69,0.9), rgba(18,25,51,0.94));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .meta {
+      color: var(--accent-2);
+      font-size: 0.88rem;
+      letter-spacing: 0.2px;
+    }
+
+    .inline-link {
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 14px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--accent-2);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(159,122,234,0.12);
+      border: 1px solid rgba(196,181,253,0.24);
+      color: var(--accent-2);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 36px 0 60px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-inner {
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 14px 18px;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(94%, var(--max));
+      }
+
+      .nav-inner {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        padding: 14px 0;
+      }
+
+      .brand {
+        font-size: 0.98rem;
+        max-width: 170px;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        display: none;
+        grid-column: 1 / -1;
+        width: 100%;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 14px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background: linear-gradient(180deg, rgba(26,35,69,0.96), rgba(18,25,51,0.98));
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 14px 12px;
+        font-size: 1rem;
+        border-radius: 14px;
+        color: var(--muted);
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus {
+        background: rgba(255,255,255,0.05);
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 44px 0 26px;
+      }
+
+      .eyebrow {
+        width: 100%;
+        border-radius: 22px;
+        padding: 12px 16px;
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 9vw, 2.8rem);
+        line-height: 1.08;
+      }
+
+      .lead {
+        font-size: 1rem;
+      }
+
+      .actions {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .btn {
+        width: 100%;
+        min-height: 56px;
+      }
+
+      .hero-card,
+      .panel,
+      .table-wrap,
+      .card {
+        padding: 20px;
+      }
+
+      section {
+        padding: 20px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Tameshia Scruggs</div>
+      <button
+        class="menu-toggle"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        ☰
+      </button>
+      <div class="nav-links" id="site-nav">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="#overview">Overview</a>
+        <a href="#inventory">VM Inventory</a>
+        <a href="#progress">Build Progress</a>
+        <a href="#links">Links</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <span class="eyebrow">Cybersecurity • Home Lab • In Progress</span>
+        <h1>Dedicated Cybersecurity Home Lab</h1>
+        <p class="lead">
+          This project documents the buildout of my dedicated cybersecurity home lab hosted on a personal server. The lab is being built to practice virtualization, network isolation, Windows and Linux administration, traffic analysis, logging, and hands-on cybersecurity fundamentals in a safe, isolated environment.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#overview">Explore Project</a>
+          <a class="btn btn-secondary" href="index.html#projects">Back to Projects</a>
+          <a class="btn btn-secondary" href="https://github.com/tameshia" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="overview">
+      <div class="container grid-2">
+        <div class="panel">
+          <div class="section-head">
+            <h2>Overview</h2>
+          </div>
+          <p class="muted">
+            I created this home lab to build hands-on experience in cybersecurity and IT using a dedicated server-based environment. The goal is to create a realistic practice space where I can work with Windows and Linux systems, network traffic analysis, system hardening, logging, and foundational security workflows.
+          </p>
+          <p class="muted">
+            This lab also serves as a long-term project that supports my technical portfolio. It will connect multiple lab exercises into one environment and document both the build process and the skills developed along the way.
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="section-head">
+            <h2>Goals</h2>
+          </div>
+          <ul class="quick-list">
+            <li>Build a dedicated virtualization-based cybersecurity lab on a personal server</li>
+            <li>Practice safely in an isolated environment</li>
+            <li>Strengthen Linux and Windows administration skills</li>
+            <li>Develop experience with network analysis, logging, and troubleshooting</li>
+            <li>Document the project clearly for portfolio and GitHub presentation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform">
+      <div class="container grid-2">
+        <div class="panel">
+          <div class="section-head">
+            <h2>Hardware &amp; Platform</h2>
+          </div>
+          <p class="muted">
+            This section will be updated with the final server specifications once the hardware details are confirmed.
+          </p>
+          <ul class="quick-list">
+            <li><strong>Server:</strong> Personal dedicated server</li>
+            <li><strong>Hypervisor:</strong> Proxmox VE</li>
+            <li><strong>Status:</strong> Planning and build preparation</li>
+            <li><strong>Purpose:</strong> Dedicated home lab host for cybersecurity practice</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="section-head">
+            <h2>Lab Architecture</h2>
+          </div>
+          <p class="muted">
+            The lab will be built around a dedicated Proxmox host with multiple virtual machines connected through an isolated lab network. The environment is designed to support safe testing, system administration practice, traffic analysis, and future security-focused expansions.
+          </p>
+          <div class="skills">
+            <span class="tag">Proxmox VE</span>
+            <span class="tag">Virtualization</span>
+            <span class="tag">Network Isolation</span>
+            <span class="tag">Windows</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Traffic Analysis</span>
+            <span class="tag">Logging</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="inventory">
+      <div class="container">
+        <div class="section-head">
+          <h2>Virtual Machine Inventory</h2>
+          <p class="muted">
+            These are the planned core virtual machines for the first version of the lab.
+          </p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>VM Name</th>
+                <th>Operating System</th>
+                <th>Purpose</th>
+                <th>Resources</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>LAB-UBUNTU-SRV-01</strong></td>
+                <td>Ubuntu Server</td>
+                <td>Linux administration, SSH, services, logging, and firewall practice</td>
+                <td>2 vCPU / 2 GB RAM / 25 GB disk</td>
+                <td><span class="status">Planned</span></td>
+              </tr>
+              <tr>
+                <td><strong>LAB-KALI-01</strong></td>
+                <td>Kali Linux</td>
+                <td>Enumeration, packet capture, and security analysis workstation</td>
+                <td>2 vCPU / 4 GB RAM / 40 GB disk</td>
+                <td><span class="status">Planned</span></td>
+              </tr>
+              <tr>
+                <td><strong>LAB-WIN11-CLIENT-01</strong></td>
+                <td>Windows 11</td>
+                <td>Event Viewer, Defender, PowerShell, firewall rules, and endpoint practice</td>
+                <td>2 vCPU / 4–6 GB RAM / 80 GB disk</td>
+                <td><span class="status">Planned</span></td>
+              </tr>
+              <tr>
+                <td><strong>LAB-METASPLOITABLE2-01</strong></td>
+                <td>Metasploitable 2</td>
+                <td>Intentionally vulnerable target for controlled internal-lab testing</td>
+                <td>1 vCPU / 1 GB RAM / 20 GB disk</td>
+                <td><span class="status">Future Add</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="progress">
+      <div class="container">
+        <div class="section-head">
+          <h2>Build Progress</h2>
+          <p class="muted">
+            This section tracks the major phases of the home lab build.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="meta">Phase 1</div>
+            <h3>Server Preparation</h3>
+            <p class="muted">
+              Confirm server specifications, back up any needed data, and prepare the machine to become a dedicated hypervisor host.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="meta">Phase 2</div>
+            <h3>Proxmox Installation</h3>
+            <p class="muted">
+              Install Proxmox VE, configure management access, and prepare the environment for virtualization and isolated networking.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="meta">Phase 3</div>
+            <h3>Network Configuration</h3>
+            <p class="muted">
+              Build an isolated lab network for VM-to-VM traffic and keep vulnerable systems separated from the main home network.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="meta">Phase 4</div>
+            <h3>Core VM Deployment</h3>
+            <p class="muted">
+              Create Ubuntu Server, Kali Linux, and Windows 11 virtual machines and verify connectivity and basic functionality.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="meta">Phase 5</div>
+            <h3>Lab Validation</h3>
+            <p class="muted">
+              Test connectivity, SSH access, Windows administration tools, basic scanning, and packet capture in the isolated environment.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="meta">Phase 6</div>
+            <h3>Future Expansion</h3>
+            <p class="muted">
+              Add vulnerable targets, logging improvements, and additional systems such as Active Directory, centralized logs, or a SIEM.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="labs">
+      <div class="container grid-2">
+        <div class="panel">
+          <div class="section-head">
+            <h2>Labs Built in This Environment</h2>
+          </div>
+          <p class="muted">
+            This home lab is designed to support multiple hands-on exercises and technical writeups over time.
+          </p>
+          <ul class="quick-list">
+            <li>Windows logging and Event Viewer practice</li>
+            <li>Windows Defender Firewall configuration</li>
+            <li>Wireshark traffic analysis</li>
+            <li>Linux administration and SSH</li>
+            <li>Basic enumeration and network validation</li>
+            <li>Future vulnerable target practice in an isolated environment</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <div class="section-head">
+            <h2>Skills Demonstrated</h2>
+          </div>
+          <div class="skills">
+            <span class="tag">Virtualization</span>
+            <span class="tag">Proxmox</span>
+            <span class="tag">Windows Administration</span>
+            <span class="tag">Linux Administration</span>
+            <span class="tag">Network Segmentation</span>
+            <span class="tag">Packet Analysis</span>
+            <span class="tag">Logging</span>
+            <span class="tag">Documentation</span>
+            <span class="tag">Troubleshooting</span>
+            <span class="tag">System Hardening</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenshots">
+      <div class="container">
+        <div class="panel">
+          <div class="section-head">
+            <h2>Screenshots</h2>
+          </div>
+          <p class="muted">
+            Screenshot placeholders for this project will include the Proxmox dashboard, VM list, network configuration, VM consoles, packet captures, and operating system configuration screens.
+          </p>
+          <ul class="quick-list">
+            <li>Proxmox dashboard overview</li>
+            <li>Virtual machine inventory view</li>
+            <li>Bridge and network configuration</li>
+            <li>Ubuntu Server terminal and SSH access</li>
+            <li>Kali Linux scanning and analysis screenshots</li>
+            <li>Windows 11 Event Viewer and firewall configuration</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="lessons">
+      <div class="container grid-2">
+        <div class="panel">
+          <div class="section-head">
+            <h2>Lessons Learned</h2>
+          </div>
+          <p class="muted">
+            This section will be updated throughout the build to reflect what I learn about virtualization, networking, system configuration, and troubleshooting while expanding the lab.
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="section-head">
+            <h2>Planned Improvements</h2>
+          </div>
+          <ul class="quick-list">
+            <li>Add exact server specifications and final resource allocation</li>
+            <li>Create a simple network diagram for the site and GitHub</li>
+            <li>Add Metasploitable 2 after the core environment is stable</li>
+            <li>Expand into centralized logging or SIEM-style monitoring</li>
+            <li>Consider future additions like Active Directory or pfSense</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="links">
+      <div class="container">
+        <div class="panel">
+          <div class="section-head">
+            <h2>Project Links</h2>
+          </div>
+          <p class="muted">
+            As the project develops, this section will link to the main GitHub repository, related labs, and documentation pages connected to the home lab.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="index.html#projects">Back to Featured Projects</a>
+            <a class="btn btn-secondary" href="https://github.com/tameshia" target="_blank" rel="noopener noreferrer">GitHub Profile</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Tameshia Scruggs. Built with GitHub Pages.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+        menuToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+      });
+
+      navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.textContent = '☰';
+        });
+      });
+    }
+  </script>
+</body>
+</html>
