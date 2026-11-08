@@ -6,7 +6,7 @@
   <title>Dedicated Cybersecurity Home Lab | Tameshia Scruggs</title>
   <meta
     name="description"
-    content="Dedicated cybersecurity home lab project by Tameshia Scruggs, featuring Proxmox virtualization, network isolation, Windows and Linux virtual machines, and hands-on security practice."
+    content="Planning notes for a dedicated IT and cybersecurity home lab, including proposed virtualization, Windows and Linux VMs, and safe network isolation."
   />
   <style>
     :root {
@@ -457,7 +457,7 @@
         <span class="eyebrow">Cybersecurity • Home Lab • In Progress</span>
         <h1>Dedicated Cybersecurity Home Lab</h1>
         <p class="lead">
-          This project documents the buildout of my dedicated cybersecurity home lab hosted on a personal server. The lab is being built to practice virtualization, network isolation, Windows and Linux administration, traffic analysis, logging, and hands-on cybersecurity fundamentals in a safe, isolated environment.
+          This page documents plans for a dedicated IT and cybersecurity home lab using a personal server. The intended environment will support Windows and Linux administration, networking, traffic analysis, and security practice. Hardware specifications, the hypervisor, and completed deployment milestones still need confirmation.
         </p>
         <div class="actions">
           <a class="btn btn-primary" href="#overview">Explore Project</a>
@@ -476,10 +476,10 @@
             <h2>Overview</h2>
           </div>
           <p class="muted">
-            I created this home lab to build hands-on experience in cybersecurity and IT using a dedicated server-based environment. The goal is to create a realistic practice space where I can work with Windows and Linux systems, network traffic analysis, system hardening, logging, and foundational security workflows.
+            I am planning this home lab to build hands-on experience in cybersecurity and IT using a dedicated server-based environment. The goal is to create a realistic practice space where I can work with Windows and Linux systems, network traffic analysis, system hardening, logging, and foundational security workflows.
           </p>
           <p class="muted">
-            This lab also serves as a long-term project that supports my technical portfolio. It will connect multiple lab exercises into one environment and document both the build process and the skills developed along the way.
+            This lab is intended as a long-term project that will support my technical portfolio. It will connect multiple lab exercises into one environment and document both the build process and the skills developed along the way.
           </p>
         </div>
 
@@ -508,9 +508,9 @@
             This section will be updated with the final server specifications once the hardware details are confirmed.
           </p>
           <ul class="quick-list">
-            <li><strong>Server:</strong> Personal dedicated server</li>
-            <li><strong>Hypervisor:</strong> ESXi </li>
-            <li><strong>Status:</strong> Planning and build preparation</li>
+            <li><strong>Server:</strong> Personal server; specifications and setup not yet verified</li>
+            <li><strong>Hypervisor:</strong> To be confirmed (earlier notes mention ESXi and Proxmox)</li>
+            <li><strong>Status:</strong> Planning; no dedicated-server deployment evidence documented yet</li>
             <li><strong>Purpose:</strong> Dedicated home lab host for cybersecurity practice</li>
           </ul>
         </div>
@@ -520,10 +520,10 @@
             <h2>Lab Architecture</h2>
           </div>
           <p class="muted">
-            The lab will be built around a dedicated Proxmox host with multiple virtual machines connected through an isolated lab network. The environment is designed to support safe testing, system administration practice, traffic analysis, and future security-focused expansions.
+            The proposed lab architecture uses a dedicated virtualization host with multiple virtual machines connected through an isolated lab network. The hypervisor has not yet been verified. The environment is designed to support safe testing, system administration practice, traffic analysis, and future security-focused expansions.
           </p>
           <div class="skills">
-            <span class="tag">Proxmox VE</span>
+            <span class="tag">Hypervisor to be confirmed</span>
             <span class="tag">Virtualization</span>
             <span class="tag">Network Isolation</span>
             <span class="tag">Windows</span>
@@ -610,9 +610,9 @@
 
           <article class="card">
             <div class="meta">Phase 2</div>
-            <h3>Proxmox Installation</h3>
+            <h3>Hypervisor Selection and Installation</h3>
             <p class="muted">
-              Install Proxmox VE, configure management access, and prepare the environment for virtualization and isolated networking.
+              Confirm the chosen hypervisor (ESXi or Proxmox), then document installation, management access, and network isolation after completion.
             </p>
           </article>
 
@@ -655,10 +655,10 @@
       <div class="container grid-2">
         <div class="panel">
           <div class="section-head">
-            <h2>Labs Built in This Environment</h2>
+            <h2>Planned Labs for This Environment</h2>
           </div>
           <p class="muted">
-            This home lab is designed to support multiple hands-on exercises and technical writeups over time.
+            The planned home lab is intended to support these exercises. The linked Windows and security lab repositories document separate practice and are not evidence that the dedicated server environment has been deployed.
           </p>
           <ul class="quick-list">
             <li>Windows logging and Event Viewer practice</li>
@@ -672,11 +672,11 @@
 
         <div class="panel">
           <div class="section-head">
-            <h2>Skills Demonstrated</h2>
+            <h2>Technical Skills to Practice</h2>
           </div>
           <div class="skills">
             <span class="tag">Virtualization</span>
-            <span class="tag">Proxmox</span>
+            <span class="tag">Virtualization Planning</span>
             <span class="tag">Windows Administration</span>
             <span class="tag">Linux Administration</span>
             <span class="tag">Network Segmentation</span>
@@ -697,10 +697,10 @@
             <h2>Screenshots</h2>
           </div>
           <p class="muted">
-            Screenshot placeholders for this project will include the Proxmox dashboard, VM list, network configuration, VM consoles, packet captures, and operating system configuration screens.
+            No verified screenshots from the dedicated server deployment have been added yet. Planned evidence includes the chosen hypervisor dashboard, VM list, network settings, and system configuration results after the build.
           </p>
           <ul class="quick-list">
-            <li>Proxmox dashboard overview</li>
+            <li>Confirmed hypervisor dashboard overview</li>
             <li>Virtual machine inventory view</li>
             <li>Bridge and network configuration</li>
             <li>Ubuntu Server terminal and SSH access</li>
@@ -728,7 +728,7 @@
           </div>
           <ul class="quick-list">
             <li>Add exact server specifications and final resource allocation</li>
-            <li>Create a simple network diagram for the site and GitHub</li>
+            <li>Confirm the hypervisor choice and create a network diagram for the site and GitHub</li>
             <li>Add Metasploitable 2 after the core environment is stable</li>
             <li>Expand into centralized logging or SIEM-style monitoring</li>
             <li>Consider future additions like Active Directory or pfSense</li>
